@@ -8,8 +8,8 @@
 #include <random>
 #include <vector>
 
-constexpr size_t THREADS = 4;
-constexpr size_t N       = 10'000'000;
+int THREADS = 8;
+int N       = 10000000;
 
 class Printer {
 public:
