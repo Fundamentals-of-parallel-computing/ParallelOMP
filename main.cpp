@@ -8,8 +8,8 @@
 #include <random>
 #include <vector>
 
-int THREADS = 8;
-int N       = 10000000;
+int THREADS = 6;
+int N       = 15000000;
 
 class Printer {
 public:
@@ -17,8 +17,8 @@ public:
         : _completionTime(completionTime), _result(result) {}
 
     void print() const {
-        std::cout << "результат: " << _result << "\n";
-        std::cout << "время: " << _completionTime.count() << " seconds\n";
+        std::cout << "Результат: " << _result << "\n";
+        std::cout << "Время: " << _completionTime.count() << " секунд\n";
     }
 
     long get() const {
@@ -43,11 +43,11 @@ public:
     static std::vector<int> generate(size_t n) {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dist(-100, 100);
+        std::normal_distribution<double> dist(150, 50);
 
         std::vector<int> result(n);
         for (size_t i = 0; i < n; i++) {
-            result[i] = dist(gen);
+            result[i] = std::max(0, static_cast<int>(dist(gen)));
         }
         return result;
     }
@@ -82,7 +82,7 @@ int main() {
 
     assert(result_serial == result_parallel);
 
-    std::cout << "последовательно: ";
+    std::cout << "Последовательно: ";
     serialPrinter.print();
     std::cout << "Параллельно: ";
     parallelPrinter.print();
